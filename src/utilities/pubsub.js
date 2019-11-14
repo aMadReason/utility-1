@@ -1,7 +1,7 @@
 // adapted from https://medium.com/@thebabscraig/javascript-design-patterns-part-2-the-publisher-subscriber-pattern-8fe07e157213
 
-const pubSub = {
-  subs: {},
+const pubsub = {
+  subs: new Map() || {},
   publish(event, data) {
     if (!this.subs[event]) return;
     this.subs[event].forEach(subCallback => subCallback(data));
@@ -13,7 +13,7 @@ const pubSub = {
   }
 };
 
-export default pubSub;
+export default pubsub;
 
 /**usage example
 const subscriber1 = pubSub.subscribe("anEvent", data => {

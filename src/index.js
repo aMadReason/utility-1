@@ -5,7 +5,7 @@ import { getPercentOfValue } from "./utilities/percentage";
 import ordinal from "./utilities/ordinal";
 import roundPrecision from "./utilities/roundPrecision";
 import { randomInt, randomDec } from "./utilities/random";
-import pubSub from "./utilities/pubSub";
+import pubsub from "./utilities/pubsub";
 
 const demos = {
   ordinal: { selector: "#ordinals" },
@@ -14,7 +14,7 @@ const demos = {
   uuid: { selector: "#uuid" },
   randomInt: { selector: "#random-int" },
   randomDec: { selector: "#random-dec" },
-  pubSub: { selector: "#pub-sub" }
+  pubsub: { selector: "#pub-sub" }
 };
 
 // select demo div
@@ -22,30 +22,30 @@ Object.keys(demos).map(
   k => (demos[k].el = document.querySelector(demos[k].selector))
 );
 
-const sub = pubSub.subscribe("event-name", data =>
+const sub = pubsub.subscribe("event-name", data =>
   console.log(
     `Wowee, "event-name" was published! with ${JSON.stringify(data, null, 2)}`
   )
 );
 
-pubSub.publish("event-name", { moo: 123 });
+pubsub.publish("event-name", { moo: 123 });
 sub.unsubscribe();
-pubSub.publish("event-name", { moo: 321 }); // this wont trigger a console log as we unsubscribed
+pubsub.publish("event-name", { moo: 321 }); // this wont trigger a console log as we unsubscribed
 
-demos.pubSub.el.innerHTML = `
+demos.pubsub.el.innerHTML = `
 <fieldset>
-<legend>pubSub</legend>
+<legend>pubsub</legend>
 <p>
 <code style=" white-space: pre">
-const sub = pubSub.subscribe("event-name", data =>
+const sub = pubsub.subscribe("event-name", data =>
   console.log(
     'Wowee, "event-name" was published! with \${JSON.stringify(data, null, 2)}'
   )
 );
 
-pubSub.publish("event-name", { moo: 123 });
+pubsub.publish("event-name", { moo: 123 });
 sub.unsubscribe();
-pubSub.publish("event-name", { moo: 321 }); // this wont trigger a console log as we unsubscribed
+pubsub.publish("event-name", { moo: 321 }); // this wont trigger a console log as we unsubscribed
 </code>
 </p>
 </fieldset>
