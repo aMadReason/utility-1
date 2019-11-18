@@ -17,7 +17,7 @@ class Router {
     const url = `/${urlSegments.join("/")}`;
     window.history.pushState({}, "", url);
 
-    this.outlet.innerHTML = matchedRoute.template;
+    if (matchedRoute) this.outlet.innerHTML = matchedRoute.template;
   }
 
   _matchUrlToRoute(urlSegments) {
