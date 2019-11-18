@@ -6,6 +6,7 @@ import ordinal from "./utilities/ordinal";
 import roundPrecision from "./utilities/roundPrecision";
 import { randomInt, randomDec } from "./utilities/random";
 import pubsub from "./utilities/pubsub";
+import Router from "./utilities/Router";
 
 const demos = {
   ordinal: { selector: "#ordinals" },
@@ -14,7 +15,8 @@ const demos = {
   uuid: { selector: "#uuid" },
   randomInt: { selector: "#random-int" },
   randomDec: { selector: "#random-dec" },
-  pubsub: { selector: "#pub-sub" }
+  pubsub: { selector: "#pub-sub" },
+  routing: { selector: "#router" }
 };
 
 // select demo div
@@ -113,6 +115,45 @@ demos.randomDec.el.innerHTML = `
     <p><code>randomDec()</code> returns ${randomDec()}</p>
     <p><code>randomDec(0, 0.5)</code> returns ${randomDec(0, 0.5)}</p>
     <p><code>randomDec(0, 0.1, 2)</code> returns ${randomDec(0, 0.1, 2)}</p>
-
   </fieldset>
 `;
+
+demos.routing.el.innerHTML = `
+  <fieldset>
+    <legend>new Router( routes = [{ path: "/", template: ""}])</legend>
+
+    <header>
+    <ul>
+      <li><button data-route="">Home</button></li>
+      <li><button data-route="about">About</button></li>
+      <li><button data-route="contact">Contact</button></li>
+    </ul>
+  </header>
+  <div data-router-outlet>
+    <h1>Hello!</h1>
+  </div>
+  </fieldset>
+`;
+const routes = [
+  {
+    path: "/",
+    template: "<h1>Home</h1>"
+  },
+  {
+    path: "/about",
+    template: "<h1>About</h1>"
+  },
+  {
+    path: "/contact",
+    template: "<h1>Contact</h1>"
+  }
+];
+const outlet = document.querySelector("[data-router-outlet]");
+const router = new Router(routes, outlet);
+const routeBtn = Array.from(demos.routing.el.querySelectorAll("[data-route]"));
+routeBtn.map(i => {
+  i.addEventListener("click", e => {
+    const route = e.target.getAttribute("data-route");
+    return router.loadRoute(route);
+  });
+});
