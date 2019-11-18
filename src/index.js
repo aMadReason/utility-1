@@ -1,3 +1,4 @@
+// useful snippets: https://github.com/30-seconds/30-seconds-of-code#readme
 import "./styles.css";
 
 import uuid from "./utilities/uuid";
