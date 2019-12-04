@@ -8,6 +8,7 @@ import roundPrecision from "./utilities/roundPrecision";
 import { randomInt, randomDec } from "./utilities/random";
 import pubsub from "./utilities/pubsub";
 import Router from "./utilities/Router";
+import getUrlParams from "./utilities/getUrlParams";
 
 const demos = {
   ordinal: { selector: "#ordinals" },
@@ -17,7 +18,8 @@ const demos = {
   randomInt: { selector: "#random-int" },
   randomDec: { selector: "#random-dec" },
   pubsub: { selector: "#pub-sub" },
-  routing: { selector: "#router" }
+  routing: { selector: "#router" },
+  urlGet: { selector: "#urlGet" }
 };
 
 // select demo div
@@ -34,6 +36,16 @@ const sub = pubsub.subscribe("event-name", data =>
 pubsub.publish("event-name", { moo: 123 });
 sub.unsubscribe();
 pubsub.publish("event-name", { moo: 321 }); // this wont trigger a console log as we unsubscribed
+
+demos.urlGet.el.innerHTML = `
+  <fieldset>
+    <legend>getUrlParams(string)</legend>
+
+<p><code>ordinal(1)</code> returns ${JSON.stringify(getUrlParams(
+  "https://www.wolvdev.com/modbox?topic=1&reason=blah"
+))}</p>
+  </fieldset>
+`;
 
 demos.pubsub.el.innerHTML = `
 <fieldset>
