@@ -1,14 +1,13 @@
 export function getUrlParamsOld(str) {
-  const url = new URL(decodeURI(str || window.location));
+  const url = new URL(str || window.location);
   const urlParams = new URLSearchParams(url.search);
   const params = {};
-  url.searchParams
-    .toString()
-    .split("&")
-    .map(p => {
-      const pair = p.split("=");
-      params[pair[0]] = pair[1];
-    });
+  // make sure strings comming in are encoding with php rawUrlEncode()
+  const urlString = decodeURIComponent(urlParams.toString());
+  urlString.split("&").map(p => {
+    const pair = p.split("=");
+    return (params[pair[0]] = pair[1]);
+  });
   return params;
 }
 

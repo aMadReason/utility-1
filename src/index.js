@@ -41,7 +41,9 @@ demos.urlGet.el.innerHTML = `
   <fieldset>
     <legend>getUrlParams(string)</legend>
 
-<p><code>ordinal(1)</code> returns ${JSON.stringify(getUrlParams(
+    <p>you can also use url encoded strings (via php rawURLEncode()</p>
+
+<p><code>getUrlParams('https://www.wolvdev.com/modbox?topic=1&reason=blah')</code> returns ${JSON.stringify(getUrlParams(
   "https://www.wolvdev.com/modbox?topic=1&reason=blah"
 ))}</p>
   </fieldset>
