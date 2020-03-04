@@ -9,6 +9,7 @@ import { randomInt, randomDec } from "./utilities/random";
 import pubsub from "./utilities/pubsub";
 import Router from "./utilities/Router";
 import getUrlParams from "./utilities/getUrlParams";
+import randomSubset from "./utilities/randomSubset";
 
 const demos = {
   ordinal: { selector: "#ordinals" },
@@ -19,18 +20,15 @@ const demos = {
   randomDec: { selector: "#random-dec" },
   pubsub: { selector: "#pub-sub" },
   routing: { selector: "#router" },
-  urlGet: { selector: "#urlGet" }
+  urlGet: { selector: "#urlGet" },
+  subset: { selector: "#subset" }
 };
 
 // select demo div
-Object.keys(demos).map(
-  k => (demos[k].el = document.querySelector(demos[k].selector))
-);
+Object.keys(demos).map(k => (demos[k].el = document.querySelector(demos[k].selector)));
 
 const sub = pubsub.subscribe("event-name", data =>
-  console.log(
-    `Wowee, "event-name" was published! with ${JSON.stringify(data, null, 2)}`
-  )
+  console.log(`Wowee, "event-name" was published! with ${JSON.stringify(data, null, 2)}`)
 );
 
 pubsub.publish("event-name", { moo: 123 });
@@ -43,9 +41,9 @@ demos.urlGet.el.innerHTML = `
 
     <p>you can also use url encoded strings (via php rawURLEncode()</p>
 
-<p><code>getUrlParams('https://www.wolvdev.com/modbox?topic=1&reason=blah')</code> returns ${JSON.stringify(getUrlParams(
-  "https://www.wolvdev.com/modbox?topic=1&reason=blah"
-))}</p>
+<p><code>getUrlParams('https://www.wolvdev.com/modbox?topic=1&reason=blah')</code> returns ${JSON.stringify(
+  getUrlParams("https://www.wolvdev.com/modbox?topic=1&reason=blah")
+)}</p>
   </fieldset>
 `;
 
@@ -94,14 +92,8 @@ demos.roundPrecision.el.innerHTML = `
 demos.getPercentOfValue.el.innerHTML = `
   <fieldset>
     <legend>getPercentOfValue(of, from)</legend>
-    <p><code>getPercentOfValue(50, 100)</code> returns ${getPercentOfValue(
-      50,
-      100
-    )}</p>
-    <p><code>getPercentOfValue(5, 100)</code> returns ${getPercentOfValue(
-      5,
-      300
-    )}</p>
+    <p><code>getPercentOfValue(50, 100)</code> returns ${getPercentOfValue(50, 100)}</p>
+    <p><code>getPercentOfValue(5, 100)</code> returns ${getPercentOfValue(5, 300)}</p>
   </fieldset>
 `;
 
@@ -172,3 +164,10 @@ routeBtn.map(i => {
     return router.loadRoute(route);
   });
 });
+
+demos.subset.el.innerHTML = `
+  <fieldset>
+    <legend>randomSubset(n = 1, array = [])</legend>
+    <p><code>randomDec(2, [1, 2, 3, 4, 5])</code> returns ${randomSubset(2, [1, 2, 3, 4, 5])}</p>
+  </fieldset>
+`;
