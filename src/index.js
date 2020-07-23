@@ -10,8 +10,10 @@ import pubsub from "./utilities/pubsub";
 import Router from "./utilities/Router";
 import getUrlParams from "./utilities/getUrlParams";
 import randomSubset from "./utilities/randomSubset";
+import colorNameToHex from "./utilities/colorNameToHex";
 
 const demos = {
+  colorNameToHex: { selector: "#colorNameToHex" },
   ordinal: { selector: "#ordinals" },
   roundPrecision: { selector: "#round-precision" },
   getPercentOfValue: { selector: "#percentage-of-val" },
@@ -25,15 +27,28 @@ const demos = {
 };
 
 // select demo div
-Object.keys(demos).map(k => (demos[k].el = document.querySelector(demos[k].selector)));
+Object.keys(demos).map(
+  k => (demos[k].el = document.querySelector(demos[k].selector))
+);
 
 const sub = pubsub.subscribe("event-name", data =>
-  console.log(`Wowee, "event-name" was published! with ${JSON.stringify(data, null, 2)}`)
+  console.log(
+    `Wowee, "event-name" was published! with ${JSON.stringify(data, null, 2)}`
+  )
 );
 
 pubsub.publish("event-name", { moo: 123 });
 sub.unsubscribe();
 pubsub.publish("event-name", { moo: 321 }); // this wont trigger a console log as we unsubscribed
+
+demos.colorNameToHex.el.innerHTML = `
+<fieldset>
+  <legend>colorNameToHex(string)</legend>
+  ${["red", "azure", "goldenrod", "white", "black", "#ffffff"]
+    .map(i => `<div>colorNameToHex('${i}') => '${colorNameToHex(i)}'</div>`)
+    .join("")}
+  
+</fieldset>`;
 
 demos.urlGet.el.innerHTML = `
   <fieldset>
@@ -92,8 +107,14 @@ demos.roundPrecision.el.innerHTML = `
 demos.getPercentOfValue.el.innerHTML = `
   <fieldset>
     <legend>getPercentOfValue(of, from)</legend>
-    <p><code>getPercentOfValue(50, 100)</code> returns ${getPercentOfValue(50, 100)}</p>
-    <p><code>getPercentOfValue(5, 100)</code> returns ${getPercentOfValue(5, 300)}</p>
+    <p><code>getPercentOfValue(50, 100)</code> returns ${getPercentOfValue(
+      50,
+      100
+    )}</p>
+    <p><code>getPercentOfValue(5, 100)</code> returns ${getPercentOfValue(
+      5,
+      300
+    )}</p>
   </fieldset>
 `;
 
@@ -168,6 +189,12 @@ routeBtn.map(i => {
 demos.subset.el.innerHTML = `
   <fieldset>
     <legend>randomSubset(n = 1, array = [])</legend>
-    <p><code>randomDec(2, [1, 2, 3, 4, 5])</code> returns ${randomSubset(2, [1, 2, 3, 4, 5])}</p>
+    <p><code>randomDec(2, [1, 2, 3, 4, 5])</code> returns ${randomSubset(2, [
+      1,
+      2,
+      3,
+      4,
+      5
+    ])}</p>
   </fieldset>
 `;
