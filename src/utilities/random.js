@@ -14,3 +14,19 @@ function randomPercentageOf(value, percent = 8, toFixed = 1) {
   const variance = randomDec(-max, max, toFixed);
   return +variance;
 }
+
+export function pickRandomInCircle(radius) {
+  const angle = Math.random() * 2 * Math.PI;
+  const radiusSq = Math.random() * radius * radius;
+  const x = Math.sqrt(radiusSq) * Math.cos(angle);
+  const y = Math.sqrt(radiusSq) * Math.sin(angle);
+  return {
+    x,
+    y
+  };
+}
+
+export function randomBetween(min = 0, max = min, fixedTo = 0) {
+  const result = min + (max - min) * Math.random();
+  return result.toFixed(fixedTo);
+}
