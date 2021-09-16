@@ -1,31 +1,31 @@
 // useful snippets: https://github.com/30-seconds/30-seconds-of-code#readme
-import './styles.css';
+import "./styles.css";
 
-import uuid from './utilities/uuid';
-import { getPercentOfValue } from './utilities/percentage';
-import ordinal from './utilities/ordinal';
-import roundPrecision from './utilities/roundPrecision';
-import { randomInt, randomDec } from './utilities/random';
-import pubsub from './utilities/pubsub';
-import Router from './utilities/Router';
-import getUrlParams from './utilities/getUrlParams';
-import randomSubset from './utilities/randomSubset';
-import colorNameToHex from './utilities/colorNameToHex';
-import stringToHtml from './utilities/stringToHtml';
+import uuid from "./utilities/uuid";
+import { getPercentOfValue } from "./utilities/percentage";
+import ordinal from "./utilities/ordinal";
+import roundPrecision from "./utilities/roundPrecision";
+import { randomInt, randomDec } from "./utilities/random";
+import pubsub from "./utilities/pubsub";
+import Router from "./utilities/Router";
+import getUrlParams from "./utilities/getUrlParams";
+import randomSubset from "./utilities/randomSubset";
+import colorNameToHex from "./utilities/colorNameToHex";
+import { stringToHtml } from "./utilities/htmlUtility";
 
 const demos = {
-  colorNameToHex: { selector: '#colorNameToHex' },
-  ordinal: { selector: '#ordinals' },
-  roundPrecision: { selector: '#round-precision' },
-  getPercentOfValue: { selector: '#percentage-of-val' },
-  uuid: { selector: '#uuid' },
-  randomInt: { selector: '#random-int' },
-  randomDec: { selector: '#random-dec' },
-  pubsub: { selector: '#pub-sub' },
-  routing: { selector: '#router' },
-  urlGet: { selector: '#urlGet' },
-  subset: { selector: '#subset' },
-  stringToHtml: { selector: '#stringToHtml' }
+  colorNameToHex: { selector: "#colorNameToHex" },
+  ordinal: { selector: "#ordinals" },
+  roundPrecision: { selector: "#round-precision" },
+  getPercentOfValue: { selector: "#percentage-of-val" },
+  uuid: { selector: "#uuid" },
+  randomInt: { selector: "#random-int" },
+  randomDec: { selector: "#random-dec" },
+  pubsub: { selector: "#pub-sub" },
+  routing: { selector: "#router" },
+  urlGet: { selector: "#urlGet" },
+  subset: { selector: "#subset" },
+  stringToHtml: { selector: "#stringToHtml" }
 };
 
 // select demo div
@@ -33,15 +33,15 @@ Object.keys(demos).map(
   (k) => (demos[k].el = document.querySelector(demos[k].selector))
 );
 
-const sub = pubsub.subscribe('event-name', (data) =>
+const sub = pubsub.subscribe("event-name", (data) =>
   console.log(
     `Wowee, "event-name" was published! with ${JSON.stringify(data, null, 2)}`
   )
 );
 
-pubsub.publish('event-name', { moo: 123 });
+pubsub.publish("event-name", { moo: 123 });
 sub.unsubscribe();
-pubsub.publish('event-name', { moo: 321 }); // this wont trigger a console log as we unsubscribed
+pubsub.publish("event-name", { moo: 321 }); // this wont trigger a console log as we unsubscribed
 
 const fragment = stringToHtml(`
   <fieldset>
@@ -54,9 +54,9 @@ demos.stringToHtml.el.append(fragment);
 demos.colorNameToHex.el.innerHTML = `
 <fieldset>
   <legend>colorNameToHex(string)</legend>
-  ${['red', 'azure', 'goldenrod', 'white', 'black', '#ffffff']
+  ${["red", "azure", "goldenrod", "white", "black", "#ffffff"]
     .map((i) => `<div>colorNameToHex('${i}') => '${colorNameToHex(i)}'</div>`)
-    .join('')}
+    .join("")}
   
 </fieldset>`;
 
@@ -67,7 +67,7 @@ demos.urlGet.el.innerHTML = `
     <p>you can also use url encoded strings (via php rawURLEncode()</p>
 
 <p><code>getUrlParams('https://www.wolvdev.com/modbox?topic=1&reason=blah')</code> returns ${JSON.stringify(
-  getUrlParams('https://www.wolvdev.com/modbox?topic=1&reason=blah')
+  getUrlParams("https://www.wolvdev.com/modbox?topic=1&reason=blah")
 )}</p>
   </fieldset>
 `;
@@ -174,24 +174,24 @@ demos.routing.el.innerHTML = `
 `;
 const routes = [
   {
-    path: '/',
-    template: '<h1>Home</h1>'
+    path: "/",
+    template: "<h1>Home</h1>"
   },
   {
-    path: '/about',
-    template: '<h1>About</h1>'
+    path: "/about",
+    template: "<h1>About</h1>"
   },
   {
-    path: '/contact',
-    template: '<h1>Contact</h1>'
+    path: "/contact",
+    template: "<h1>Contact</h1>"
   }
 ];
-const outlet = document.querySelector('[data-router-outlet]');
+const outlet = document.querySelector("[data-router-outlet]");
 const router = new Router(routes, outlet);
-const routeBtn = Array.from(demos.routing.el.querySelectorAll('[data-route]'));
+const routeBtn = Array.from(demos.routing.el.querySelectorAll("[data-route]"));
 routeBtn.map((i) => {
-  i.addEventListener('click', (e) => {
-    const route = e.target.getAttribute('data-route');
+  i.addEventListener("click", (e) => {
+    const route = e.target.getAttribute("data-route");
     return router.loadRoute(route);
   });
 });
